@@ -5,140 +5,261 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberSafe Hub - Stay Safe. Stay Secure.</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <h2>CyberSafe Hub</h2>
+                <h2>🛡️ CyberSafe Hub</h2>
             </div>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#learning" class="nav-link">Learning Hub</a></li>
-                <li><a href="#cyber-crime" class="nav-link">Cyber Crime Awareness</a></li>
-                <li><a href="#indian-laws" class="nav-link">India-Specific Laws</a></li>
-                <li><a href="#diy-tools" class="nav-link">DIY Tools & Tips</a></li>
-                <li><a href="#news" class="nav-link">News & Blog</a></li>
-                <li><a href="#report" class="nav-link">Report a Crime</a></li>
+                <li><a href="#threats" class="nav-link">Threats</a></li>
+                <li><a href="#laws" class="nav-link">Laws</a></li>
+                <li><a href="#tools" class="nav-link">Tools</a></li>
+                <li><a href="#news" class="nav-link">News</a></li>
+                <li><a href="#report" class="nav-link">Report</a></li>
             </ul>
-            <button class="mobile-toggle" id="mobileToggle">☰</button>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle mobile menu">☰</button>
         </div>
     </nav>
 
-    <!-- Home Section -->
-    <section id="home" class="hero">
+    <!-- Hero Section -->
+    <section id="home" class="hero section">
         <div class="container">
             <div class="hero-content">
                 <h1>Stay Safe. Stay Secure. Learn Cybersecurity the Smart Way.</h1>
                 <p>Comprehensive cybersecurity education for everyone. Learn, protect, and stay informed about digital security threats and solutions.</p>
                 <div class="hero-buttons">
-                    <button class="btn btn--primary" onclick="scrollToSection('learning')">Start Learning</button>
-                    <button class="btn btn--secondary" onclick="scrollToSection('indian-laws')">Know the Laws</button>
-                    <button class="btn btn--outline" onclick="scrollToSection('diy-tools')">Protect Yourself</button>
+                    <button class="btn btn--primary btn--lg" onclick="scrollToSection('learning')">Start Learning</button>
+                    <button class="btn btn--outline btn--lg" onclick="scrollToSection('tools')">Security Tools</button>
                 </div>
                 <div class="news-ticker">
-                    <div class="ticker-content" id="newsTicker"></div>
+                    <div class="ticker-content" id="newsTicker">
+                        ⚠️ Breaking: New cybersecurity threats detected...
+                    </div>
                 </div>
-                <button class="btn btn--sm quiz-btn" onclick="openQuiz()">Test Your Cyber Safety in 2 Minutes</button>
+                <button class="btn btn--secondary quiz-btn" onclick="openQuiz()">
+                    🧠 Test Your Knowledge - Take Quiz
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Learning Hub Section -->
+    <!-- Learning Hub -->
     <section id="learning" class="section">
         <div class="container">
             <h2>Learning Hub</h2>
-            <p>Interactive modules with progress tracking to enhance your cybersecurity knowledge</p>
+            <p>Interactive modules with progress tracking and video tutorials to enhance your cybersecurity knowledge</p>
+            
             <div class="learning-grid">
+                <!-- Beginner Basics Module -->
                 <div class="card learning-module">
                     <div class="card__body">
                         <h3>Beginner Basics</h3>
                         <p>Essential cybersecurity fundamentals for everyone</p>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
+                            <div class="progress-fill" id="progress-beginner" style="width: 0%"></div>
                         </div>
-                        <button class="btn btn--primary btn--sm module-btn" data-level="beginner">Start Module</button>
+                        <button class="btn btn--primary module-btn" data-level="beginner" onclick="startModule('beginner')">
+                            Start Module
+                        </button>
+                        
+                        <!-- Video Section -->
+                        <div class="video-section" id="video-beginner" style="display: none;">
+                            <h4>📹 Video Tutorials</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/inWWhr5tnEA" 
+                                        title="Cybersecurity Basics for Beginners" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-links">
+                                <a href="https://www.youtube.com/watch?v=inWWhr5tnEA" target="_blank" class="btn btn--outline btn--sm">
+                                    🔗 Watch on YouTube
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Threat Detection Module -->
                 <div class="card learning-module">
                     <div class="card__body">
                         <h3>Threat Detection</h3>
                         <p>Learn to identify and respond to cyber threats</p>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
+                            <div class="progress-fill" id="progress-intermediate" style="width: 0%"></div>
                         </div>
-                        <button class="btn btn--primary btn--sm module-btn" data-level="intermediate">Start Module</button>
+                        <button class="btn btn--primary module-btn" data-level="intermediate" onclick="startModule('intermediate')">
+                            Start Module
+                        </button>
+                        
+                        <!-- Video Section -->
+                        <div class="video-section" id="video-intermediate" style="display: none;">
+                            <h4>📹 Video Tutorials</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/Dk-ZqQ-bfy4" 
+                                        title="How to Detect Cyber Threats" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-links">
+                                <a href="https://www.youtube.com/watch?v=Dk-ZqQ-bfy4" target="_blank" class="btn btn--outline btn--sm">
+                                    🔗 Watch on YouTube
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Advanced Security Module -->
                 <div class="card learning-module">
                     <div class="card__body">
                         <h3>Advanced Security</h3>
                         <p>Master advanced cybersecurity practices</p>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
+                            <div class="progress-fill" id="progress-advanced" style="width: 0%"></div>
                         </div>
-                        <button class="btn btn--primary btn--sm module-btn" data-level="advanced">Start Module</button>
+                        <button class="btn btn--primary module-btn" data-level="advanced" onclick="startModule('advanced')">
+                            Start Module
+                        </button>
+                        
+                        <!-- Video Section -->
+                        <div class="video-section" id="video-advanced" style="display: none;">
+                            <h4>📹 Video Tutorials</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/s19BxFpoSd0" 
+                                        title="Advanced Cybersecurity Techniques" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-links">
+                                <a href="https://www.youtube.com/watch?v=s19BxFpoSd0" target="_blank" class="btn btn--outline btn--sm">
+                                    🔗 Watch on YouTube
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="progress-overview">
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Your Learning Progress</h3>
+                        <div class="overall-progress">
+                            <div class="progress-item">
+                                <span>Overall Completion:</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="overall-progress" style="width: 0%"></div>
+                                </div>
+                                <span id="overall-percentage">0%</span>
+                            </div>
+                            <div class="progress-stats">
+                                <div class="stat">
+                                    <span class="stat-label">Modules Completed:</span>
+                                    <span class="stat-value" id="completed-modules">0/3</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Videos Watched:</span>
+                                    <span class="stat-value" id="videos-watched">0/3</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Time Spent Learning:</span>
+                                    <span class="stat-value" id="learning-time">0h 0m</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn--secondary" onclick="resetProgress()">Reset Progress</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Cyber Crime Awareness Section -->
-    <section id="cyber-crime" class="section">
+    <!-- Cyber Crime Awareness -->
+    <section id="threats" class="section">
         <div class="container">
             <h2>Cyber Crime Awareness</h2>
             <p>Learn about common cyber threats and how to protect yourself</p>
+            
             <div class="crime-cards" id="crimeCards">
                 <!-- Crime cards will be populated by JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- Indian Laws Section -->
-    <section id="indian-laws" class="section">
+    <!-- India-Specific Cybersecurity Laws -->
+    <section id="laws" class="section">
         <div class="container">
-            <h2>India-Specific Cybersecurity Laws</h2>
             <div class="tabs">
                 <div class="tab-buttons">
-                    <button class="tab-btn active" data-tab="overview">Overview</button>
-                    <button class="tab-btn" data-tab="crimes">Serious Cyber Crimes</button>
-                    <button class="tab-btn" data-tab="punishments">Punishment Table</button>
-                    <button class="tab-btn" data-tab="how-to-report">How to Report</button>
+                    <button class="tab-btn active" data-tab="laws-overview">IT Act 2000 & IPC Basics</button>
+                    <button class="tab-btn" data-tab="laws-table">Laws Reference Table</button>
                 </div>
                 
-                <div class="tab-content active" id="overview">
-                    <div class="card">
-                        <div class="card__body">
-                            <h3>IT Act 2000 & IPC Basics</h3>
-                            <p>The Information Technology Act 2000 is India's primary law dealing with cybercrime and e-commerce. It defines cyber offenses and prescribes penalties for cybercrimes.</p>
-                            <div class="law-categories">
-                                <div class="law-category">
-                                    <h4>Minor Offenses</h4>
-                                    <p>Typically involve fines and short-term imprisonment (up to 3 years)</p>
-                                </div>
-                                <div class="law-category">
-                                    <h4>Serious Offenses</h4>
-                                    <p>May involve longer imprisonment terms and substantial penalties</p>
-                                </div>
+                <div class="tab-content active" id="laws-overview">
+                    <h3>India-Specific Cybersecurity Laws</h3>
+                    <p>The Information Technology Act 2000 is India's primary law dealing with cybercrime and e-commerce. It defines cyber offenses and prescribes penalties for cybercrimes.</p>
+                    
+                    <div class="law-categories">
+                        <div class="law-category">
+                            <h4>Minor Offenses</h4>
+                            <p>Typically involve fines and short-term imprisonment (up to 3 years)</p>
+                        </div>
+                        <div class="law-category">
+                            <h4>Serious Offenses</h4>
+                            <p>May involve longer imprisonment terms and substantial penalties</p>
+                        </div>
+                    </div>
+                    
+                    <div class="laws-grid" id="lawsGrid">
+                        <!-- Laws will be populated by JavaScript -->
+                    </div>
+                    
+                    <h3>How to Report Cybercrime in India</h3>
+                    <div class="steps-container">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Visit cybercrime.gov.in</h4>
+                                <p>Go to the official National Cybercrime Reporting Portal</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Register Your Complaint</h4>
+                                <p>Fill out the online complaint form with all required details</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Call 1930 for Immediate Help</h4>
+                                <p>Use the national helpline for urgent cybercrime assistance</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="tab-content" id="crimes">
-                    <div class="laws-grid" id="lawsGrid">
-                        <!-- Laws cards will be populated by JavaScript -->
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="punishments">
+                <div class="tab-content" id="laws-table">
                     <div class="search-container">
-                        <input type="text" class="form-control" id="lawSearch" placeholder="Search crimes, sections, or punishments...">
+                        <input type="text" id="lawSearch" class="form-control" placeholder="Search laws by crime type, section, or description...">
                     </div>
                     <div class="table-container">
-                        <table class="laws-table" id="lawsTable">
+                        <table class="laws-table">
                             <thead>
                                 <tr>
                                     <th>Crime Type</th>
@@ -153,97 +274,68 @@
                         </table>
                     </div>
                 </div>
-                
-                <div class="tab-content" id="how-to-report">
-                    <div class="reporting-steps">
-                        <h3>How to Report Cybercrime in India</h3>
-                        <div class="steps-container">
-                            <div class="step">
-                                <div class="step-number">1</div>
-                                <div class="step-content">
-                                    <h4>Visit cybercrime.gov.in</h4>
-                                    <p>Go to the official National Cybercrime Reporting Portal</p>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <div class="step-number">2</div>
-                                <div class="step-content">
-                                    <h4>Register Your Complaint</h4>
-                                    <p>Fill out the online complaint form with all required details</p>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <div class="step-number">3</div>
-                                <div class="step-content">
-                                    <h4>Call 1930 for Immediate Help</h4>
-                                    <p>Use the national helpline for urgent cybercrime assistance</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- DIY Tools Section -->
-    <section id="diy-tools" class="section">
+    <!-- DIY Tools & Tips -->
+    <section id="tools" class="section">
         <div class="container">
             <h2>DIY Tools & Tips</h2>
             <p>Practical tools and resources to enhance your cybersecurity</p>
             
-            <div class="tools-grid">
+            <div class="tools-grid">          
+                <!-- Password Strength Checker -->
                 <div class="card tool-card">
                     <div class="card__body">
                         <h3>Password Strength Checker</h3>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="passwordInput" placeholder="Enter your password">
-                            <div class="password-strength" id="passwordStrength"></div>
-                            <div class="password-tips" id="passwordTips"></div>
+                            <input type="password" id="passwordInput" class="form-control" placeholder="Enter your password to check strength">
                         </div>
+                        <div id="passwordStrength" class="password-strength"></div>
+                        <div id="passwordTips" class="password-tips"></div>
                     </div>
                 </div>
-                
+
+                <!-- 2FA Setup Guide -->
                 <div class="card tool-card">
                     <div class="card__body">
                         <h3>2FA Setup Guide</h3>
                         <div class="platforms">
-                            <button class="btn btn--outline btn--sm platform-btn" data-platform="whatsapp">WhatsApp</button>
-                            <button class="btn btn--outline btn--sm platform-btn" data-platform="gmail">Gmail</button>
-                            <button class="btn btn--outline btn--sm platform-btn" data-platform="instagram">Instagram</button>
+                            <button class="btn btn--outline platform-btn" data-platform="whatsapp">WhatsApp</button>
+                            <button class="btn btn--outline platform-btn" data-platform="gmail">Gmail</button>
+                            <button class="btn btn--outline platform-btn" data-platform="instagram">Instagram</button>
                         </div>
-                        <div class="platform-instructions" id="platformInstructions"></div>
+                        <div id="platformInstructions" class="platform-instructions">
+                            Select a platform above to see 2FA setup instructions
+                        </div>
                     </div>
                 </div>
-                
+
+                <!-- Device Protection Checklist -->
                 <div class="card tool-card">
                     <div class="card__body">
                         <h3>Device Protection Checklist</h3>
-                        <div class="checklist" id="deviceChecklist">
+                        <div class="checklist">
                             <label class="checklist-item">
                                 <input type="checkbox" class="checklist-checkbox">
-                                <span class="checkmark"></span>
-                                <span>Enable automatic software updates</span>
+                                Enable automatic software updates
                             </label>
                             <label class="checklist-item">
                                 <input type="checkbox" class="checklist-checkbox">
-                                <span class="checkmark"></span>
-                                <span>Install reputable antivirus software</span>
+                                Install reputable antivirus software
                             </label>
                             <label class="checklist-item">
                                 <input type="checkbox" class="checklist-checkbox">
-                                <span class="checkmark"></span>
-                                <span>Use strong, unique passwords</span>
+                                Use strong, unique passwords
                             </label>
                             <label class="checklist-item">
                                 <input type="checkbox" class="checklist-checkbox">
-                                <span class="checkmark"></span>
-                                <span>Enable two-factor authentication</span>
+                                Enable two-factor authentication
                             </label>
                             <label class="checklist-item">
                                 <input type="checkbox" class="checklist-checkbox">
-                                <span class="checkmark"></span>
-                                <span>Regular data backups</span>
+                                Regular data backups
                             </label>
                         </div>
                     </div>
@@ -252,24 +344,26 @@
         </div>
     </section>
 
-    <!-- News Section -->
+    <!-- Latest Security News & Alerts -->
     <section id="news" class="section">
         <div class="container">
             <h2>Latest Security News & Alerts</h2>
+            
             <div class="news-grid">
-                <div class="card news-card">
+                <div class="card">
                     <div class="card__body">
                         <h3>Government Advisories</h3>
                         <p>Latest cybersecurity advisories from CERT-In and government agencies</p>
-                        <a href="https://cert-in.org.in" target="_blank" class="btn btn--outline btn--sm">Visit CERT-In</a>
+                        <a href="https://www.cert-in.org.in/" target="_blank" class="btn btn--primary">Visit CERT-In</a>
                     </div>
                 </div>
-                <div class="card news-card">
+                
+                <div class="card">
                     <div class="card__body">
                         <h3>Trending Threats</h3>
                         <p>Current cybersecurity threats and vulnerabilities to watch out for</p>
                         <div class="threat-list" id="threatList">
-                            <!-- Threat items will be populated by JavaScript -->
+                            <!-- Threats will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -277,24 +371,34 @@
         </div>
     </section>
 
-    <!-- Report Crime Section -->
+    <!-- Report a Crime -->
     <section id="report" class="section report-section">
         <div class="container">
             <h2>Report a Crime</h2>
+            
             <div class="report-cta">
                 <h3>Think you're a victim? Act now.</h3>
                 <p>Report cybercrime immediately to minimize damage and help authorities</p>
                 <div class="report-buttons">
-                    <a href="https://cybercrime.gov.in" target="_blank" class="btn btn--primary">Report Online</a>
-                    <a href="tel:1930" class="btn btn--secondary">Call 1930</a>
+                    <a href="https://cybercrime.gov.in/" target="_blank" class="btn btn--primary btn--lg">Report Online</a>
+                    <a href="tel:1930" class="btn btn--secondary btn--lg">Call 1930</a>
                 </div>
             </div>
-            
+
             <div class="reporting-checklist">
                 <h3>Before You Report - Collect Evidence</h3>
-                <div class="checklist" id="reportingChecklist">
+                <div id="reportingChecklist" class="checklist">
                     <!-- Checklist items will be populated by JavaScript -->
                 </div>
+            </div>
+
+            <!-- Cybersecurity Quiz -->
+            <div class="quiz-section">
+                <h3>Cybersecurity Quiz</h3>
+                <p>Test your cybersecurity knowledge with our interactive quiz</p>
+                <button class="btn btn--primary" onclick="openQuiz()">
+                    Start Quiz (<span id="totalQuestions">10</span> questions)
+                </button>
             </div>
         </div>
     </section>
@@ -304,58 +408,72 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
+                    <h4>Resources</h4>
                     <ul>
-                        <li><a href="#learning">Learning Hub</a></li>
-                        <li><a href="#cyber-crime">Cyber Crime Awareness</a></li>
-                        <li><a href="#indian-laws">Indian Laws</a></li>
-                        <li><a href="#diy-tools">DIY Tools</a></li>
+                        <li><a href="https://cybercrime.gov.in/">Report Cybercrime</a></li>
+                        <li><a href="https://www.cert-in.org.in/">CERT-In</a></li>
+                        <li><a href="https://www.meity.gov.in/">MeitY</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Government Portals</h4>
+                    <h4>Legal</h4>
                     <ul>
-                        <li><a href="https://cybercrime.gov.in" target="_blank">Cybercrime.gov.in</a></li>
-                        <li><a href="https://cert-in.org.in" target="_blank">CERT-In</a></li>
+                        <li><a href="#">IT Act 2000</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
                         <li><a href="tel:1930">Helpline: 1930</a></li>
+                        <li><a href="mailto:support@cybersafe.gov.in">Email Support</a></li>
+                        <li><a href="#">FAQ</a></li>
                     </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>Email: support@cybersafehub.in</p>
-                    <p>For educational purposes only</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 CyberSafe Hub. This website is for educational purposes, not legal advice.</p>
+                <p>&copy; 2024 CyberSafe Hub. All rights reserved. | Educational purposes only.</p>
             </div>
         </div>
     </footer>
 
     <!-- Quiz Modal -->
-    <div class="modal hidden" id="quizModal">
+    <div id="quizModal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Cybersecurity Quiz</h3>
-                <button class="modal-close" onclick="closeQuiz()">&times;</button>
+                <h3>Cybersecurity Knowledge Quiz</h3>
+                <button class="modal-close" onclick="closeQuiz()" aria-label="Close quiz">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="quiz-container" id="quizContainer">
+                <div id="quizContainer">
                     <div class="question-counter">
-                        <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span>
+                        Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span>
                     </div>
-                    <div class="question" id="questionText"></div>
-                    <div class="options" id="optionsContainer"></div>
+                    <div class="question" id="questionText">
+                        Loading question...
+                    </div>
+                    <div class="options" id="optionsContainer">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
                     <div class="quiz-navigation">
-                        <button class="btn btn--secondary" id="prevBtn" onclick="previousQuestion()">Previous</button>
-                        <button class="btn btn--primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+                        <button id="prevBtn" class="btn btn--outline" onclick="previousQuestion()" style="display: none;">Previous</button>
+                        <button id="nextBtn" class="btn btn--primary" onclick="nextQuestion()" disabled>Next</button>
                     </div>
                 </div>
-                <div class="quiz-result hidden" id="quizResult">
+                
+                <div id="quizResult" class="quiz-result hidden">
                     <h3>Quiz Complete!</h3>
-                    <div class="score" id="finalScore"></div>
-                    <div class="recommendations" id="recommendations"></div>
-                    <button class="btn btn--primary" onclick="restartQuiz()">Take Quiz Again</button>
+                    <div class="score">
+                        Your Score: <span id="finalScore">0/10</span>
+                    </div>
+                    <div class="recommendations" id="recommendations">
+                        <!-- Recommendations will be populated by JavaScript -->
+                    </div>
+                    <div class="quiz-navigation">
+                        <button class="btn btn--primary" onclick="restartQuiz()">Take Again</button>
+                        <button class="btn btn--outline" onclick="closeQuiz()">Close</button>
+                    </div>
                 </div>
             </div>
         </div>

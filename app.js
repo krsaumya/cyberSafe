@@ -1,4 +1,4 @@
-// Application data
+// Application data  
 const appData = {
   threats: [
     {
@@ -83,54 +83,92 @@ const appData = {
     "Report to cybercrime.gov.in immediately",
     "Contact your bank if financial fraud occurred", 
     "File a complaint with local police if needed"
-  ]
+  ],
+  // YouTube video data for learning modules
+  videoData: {
+    beginner: {
+      videoId: "inWWhr5tnEA",
+      title: "Cybersecurity Basics for Beginners",
+      description: "Learn fundamental cybersecurity concepts and practices"
+    },
+    intermediate: {
+      videoId: "Dk-ZqQ-bfy4", 
+      title: "How to Detect Cyber Threats",
+      description: "Advanced techniques for identifying potential security threats"
+    },
+    advanced: {
+      videoId: "s19BxFpoSd0",
+      title: "Advanced Cybersecurity Techniques", 
+      description: "Master-level cybersecurity practices and methodologies"
+    }
+  }
 };
 
-// Quiz state
+// Platform 2FA instructions  
+const platformInstructions = {
+  whatsapp: `
+#### Enable 2FA on WhatsApp:
+
+2. Open WhatsApp and go to Settings
+4. Tap on Account → Two-step verification
+6. Tap Enable and create a 6-digit PIN
+8. Add an email address for account recovery
+10. Confirm your email address
+
+**Important:** Keep your PIN and email safe. You'll need them to access your account.
+  `,
+  gmail: `
+#### Enable 2FA on Gmail:
+
+2. Go to your Google Account settings
+4. Select Security → 2-Step Verification
+6. Click "Get Started" and sign in
+8. Add your phone number
+10. Choose to receive codes via SMS or voice call
+12. Enter the verification code sent to your phone
+
+**Tip:** Use the Google Authenticator app for better security.
+  `,
+  instagram: `
+#### Enable 2FA on Instagram:
+
+2. Go to your profile and tap the menu (≡)
+4. Tap Settings → Security → Two-Factor Authentication
+6. Tap "Get Started"
+8. Choose Text Message or Authentication App
+10. Follow the prompts to set up your preferred method
+12. Save your backup codes in a safe place
+
+**Note:** Backup codes can help you regain access if you lose your phone.
+  `
+};
+
+// LocalStorage key constants
+const STORAGE_KEYS = {
+  PROGRESS: 'cybersafe_progress',
+  COMPLETED_MODULES: 'cybersafe_completed_modules',
+  VIDEOS_WATCHED: 'cybersafe_videos_watched',
+  LEARNING_TIME: 'cybersafe_learning_time',
+  LAST_UPDATED: 'cybersafe_last_updated'
+};
+
+// Progress tracking variables
+let progressData = {
+  beginner: 0,
+  intermediate: 0,
+  advanced: 0,
+  completedModules: [],
+  videosWatched: [],
+  totalLearningTime: 0,
+  lastUpdated: new Date().toISOString()
+};
+
+// Quiz state  
 let currentQuizQuestion = 0;
 let quizScore = 0;
 let userAnswers = [];
 
-// Platform 2FA instructions
-const platformInstructions = {
-  whatsapp: `
-    <h4>Enable 2FA on WhatsApp:</h4>
-    <ol>
-      <li>Open WhatsApp and go to Settings</li>
-      <li>Tap on Account → Two-step verification</li>
-      <li>Tap Enable and create a 6-digit PIN</li>
-      <li>Add an email address for account recovery</li>
-      <li>Confirm your email address</li>
-    </ol>
-    <p><strong>Important:</strong> Keep your PIN and email safe. You'll need them to access your account.</p>
-  `,
-  gmail: `
-    <h4>Enable 2FA on Gmail:</h4>
-    <ol>
-      <li>Go to your Google Account settings</li>
-      <li>Select Security → 2-Step Verification</li>
-      <li>Click "Get Started" and sign in</li>
-      <li>Add your phone number</li>
-      <li>Choose to receive codes via SMS or voice call</li>
-      <li>Enter the verification code sent to your phone</li>
-    </ol>
-    <p><strong>Tip:</strong> Use the Google Authenticator app for better security.</p>
-  `,
-  instagram: `
-    <h4>Enable 2FA on Instagram:</h4>
-    <ol>
-      <li>Go to your profile and tap the menu (≡)</li>
-      <li>Tap Settings → Security → Two-Factor Authentication</li>
-      <li>Tap "Get Started"</li>
-      <li>Choose Text Message or Authentication App</li>
-      <li>Follow the prompts to set up your preferred method</li>
-      <li>Save your backup codes in a safe place</li>
-    </ol>
-    <p><strong>Note:</strong> Backup codes can help you regain access if you lose your phone.</p>
-  `
-};
-
-// DOM Content Loaded
+// DOM Content Loaded  
 document.addEventListener('DOMContentLoaded', function() {
   initializeApp();
 });
@@ -148,9 +186,289 @@ function initializeApp() {
   setupThreatList();
   setupQuiz();
   setupSearchFunctionality();
+  loadProgressFromStorage();
+  setupVideoTracking();
 }
 
-// Navigation
+// LocalStorage functions
+function saveProgressToStorage() {
+  try {
+    progressData.lastUpdated = new Date().toISOString();
+    localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(progressData));
+    localStorage.setItem(STORAGE_KEYS.COMPLETED_MODULES, JSON.stringify(progressData.completedModules));
+    localStorage.setItem(STORAGE_KEYS.VIDEOS_WATCHED, JSON.stringify(progressData.videosWatched));
+    localStorage.setItem(STORAGE_KEYS.LEARNING_TIME, progressData.totalLearningTime.toString());
+    localStorage.setItem(STORAGE_KEYS.LAST_UPDATED, progressData.lastUpdated);
+  } catch (error) {
+    console.error('Error saving progress to localStorage:', error);
+  }
+}
+
+function loadProgressFromStorage() {
+  try {
+    const savedProgress = localStorage.getItem(STORAGE_KEYS.PROGRESS);
+    if (savedProgress) {
+      progressData = JSON.parse(savedProgress);
+      
+      // Update progress bars
+      updateProgressBar('beginner', progressData.beginner);
+      updateProgressBar('intermediate', progressData.intermediate); 
+      updateProgressBar('advanced', progressData.advanced);
+      
+      // Update module buttons if completed
+      progressData.completedModules.forEach(moduleId => {
+        const button = document.querySelector(`[data-level="${moduleId}"]`);
+        if (button) {
+          button.textContent = 'Completed';
+          button.classList.add('btn--secondary');
+          button.classList.remove('btn--primary');
+        }
+      });
+      
+      // Show videos for completed modules
+      progressData.completedModules.forEach(moduleId => {
+        showVideoSection(moduleId);
+      });
+      
+      // Update overall progress
+      updateOverallProgress();
+    }
+  } catch (error) {
+    console.error('Error loading progress from localStorage:', error);
+  }
+}
+
+function resetProgress() {
+  if (confirm('Are you sure you want to reset all your learning progress? This action cannot be undone.')) {
+    try {
+      // Clear localStorage
+      Object.values(STORAGE_KEYS).forEach(key => {
+        localStorage.removeItem(key);
+      });
+      
+      // Reset progress data
+      progressData = {
+        beginner: 0,
+        intermediate: 0,
+        advanced: 0,
+        completedModules: [],
+        videosWatched: [],
+        totalLearningTime: 0,
+        lastUpdated: new Date().toISOString()
+      };
+      
+      // Reset UI
+      ['beginner', 'intermediate', 'advanced'].forEach(level => {
+        updateProgressBar(level, 0);
+        const button = document.querySelector(`[data-level="${level}"]`);
+        if (button) {
+          button.textContent = 'Start Module';
+          button.classList.add('btn--primary');
+          button.classList.remove('btn--secondary');
+        }
+        hideVideoSection(level);
+      });
+      
+      updateOverallProgress();
+      alert('Progress has been reset successfully!');
+    } catch (error) {
+      console.error('Error resetting progress:', error);
+      alert('Error resetting progress. Please try again.');
+    }
+  }
+}
+
+// Video tracking functions
+function setupVideoTracking() {
+  // Track video watch completion via YouTube API events would require additional setup
+  // For now, we'll track based on video section visibility and user interaction
+}
+
+function markVideoAsWatched(moduleId) {
+  if (!progressData.videosWatched.includes(moduleId)) {
+    progressData.videosWatched.push(moduleId);
+    saveProgressToStorage();
+    updateOverallProgress();
+  }
+}
+
+function showVideoSection(moduleId) {
+  const videoSection = document.getElementById(`video-${moduleId}`);
+  if (videoSection) {
+    videoSection.style.display = 'block';
+    // Add intersection observer to track when video comes into view
+    observeVideoSection(videoSection, moduleId);
+  }
+}
+
+function hideVideoSection(moduleId) {
+  const videoSection = document.getElementById(`video-${moduleId}`);
+  if (videoSection) {
+    videoSection.style.display = 'none';
+  }
+}
+
+function observeVideoSection(videoSection, moduleId) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Mark video as watched when it comes into view
+        setTimeout(() => {
+          markVideoAsWatched(moduleId);
+        }, 3000); // Wait 3 seconds to consider it "watched"
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  observer.observe(videoSection);
+}
+
+// Enhanced module start function
+function startModule(level) {
+  const button = document.querySelector(`[data-level="${level}"]`);
+  const progressBar = document.querySelector(`#progress-${level}`);
+  
+  if (!button || !progressBar) return;
+  
+  // Start learning time tracking
+  const startTime = Date.now();
+  
+  button.textContent = 'Loading...';
+  button.disabled = true;
+  
+  // Simulate progress with more realistic timing
+  let progress = progressData[level] || 0;
+  const targetProgress = 100;
+  const increment = (targetProgress - progress) / 10;
+  
+  const interval = setInterval(() => {
+    progress += increment;
+    updateProgressBar(level, progress);
+    
+    if (progress >= targetProgress) {
+      clearInterval(interval);
+      
+      // Calculate learning time
+      const endTime = Date.now();
+      const sessionTime = (endTime - startTime) / 1000 / 60; // minutes
+      progressData.totalLearningTime += sessionTime;
+      
+      // Mark module as completed
+      if (!progressData.completedModules.includes(level)) {
+        progressData.completedModules.push(level);
+      }
+      
+      // Update progress data
+      progressData[level] = 100;
+      
+      // Update button
+      button.textContent = 'Completed';
+      button.classList.add('btn--secondary');
+      button.classList.remove('btn--primary');
+      button.disabled = false;
+      
+      // Show video section
+      showVideoSection(level);
+      
+      // Save progress
+      saveProgressToStorage();
+      updateOverallProgress();
+      
+      // Show completion message
+      showModuleCompletionMessage(level);
+    }
+  }, 200);
+}
+
+function updateProgressBar(level, percentage) {
+  const progressBar = document.querySelector(`#progress-${level}`);
+  if (progressBar) {
+    progressBar.style.width = `${Math.min(percentage, 100)}%`;
+  }
+}
+
+function updateOverallProgress() {
+  const totalModules = 3;
+  const completedCount = progressData.completedModules.length;
+  const videosWatchedCount = progressData.videosWatched.length;
+  const overallPercentage = Math.round((completedCount / totalModules) * 100);
+  
+  // Update overall progress bar
+  const overallProgressBar = document.getElementById('overall-progress');
+  if (overallProgressBar) {
+    overallProgressBar.style.width = `${overallPercentage}%`;
+  }
+  
+  // Update percentage text
+  const percentageText = document.getElementById('overall-percentage');
+  if (percentageText) {
+    percentageText.textContent = `${overallPercentage}%`;
+  }
+  
+  // Update completed modules count
+  const completedModulesText = document.getElementById('completed-modules');
+  if (completedModulesText) {
+    completedModulesText.textContent = `${completedCount}/${totalModules}`;
+  }
+  
+  // Update videos watched count
+  const videosWatchedText = document.getElementById('videos-watched');
+  if (videosWatchedText) {
+    videosWatchedText.textContent = `${videosWatchedCount}/${totalModules}`;
+  }
+  
+  // Update learning time
+  const learningTimeText = document.getElementById('learning-time');
+  if (learningTimeText) {
+    const hours = Math.floor(progressData.totalLearningTime / 60);
+    const minutes = Math.round(progressData.totalLearningTime % 60);
+    learningTimeText.textContent = `${hours}h ${minutes}m`;
+  }
+}
+
+function showModuleCompletionMessage(level) {
+  const messages = {
+    beginner: "🎉 Congratulations! You've completed the Beginner Basics module. Check out the video tutorial below!",
+    intermediate: "🛡️ Great job! You've mastered Threat Detection. Watch the advanced video to learn more!",
+    advanced: "🏆 Excellent! You've completed Advanced Security. You're now a cybersecurity expert!"
+  };
+  
+  // Create a temporary notification
+  const notification = document.createElement('div');
+  notification.className = 'completion-notification';
+  notification.innerHTML = `
+    <div class="notification-content">
+      <p>${messages[level]}</p>
+      <button onclick="this.parentElement.parentElement.remove()">×</button>
+    </div>
+  `;
+  
+  // Add notification styles
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--color-success);
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    max-width: 300px;
+    animation: slideIn 0.3s ease-out;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Auto-remove after 5 seconds
+  setTimeout(() => {
+    if (notification.parentElement) {
+      notification.remove();
+    }
+  }, 5000);
+}
+
+// Navigation  
 function setupNavigation() {
   const mobileToggle = document.getElementById('mobileToggle');
   const navMenu = document.querySelector('.nav-menu');
@@ -161,7 +479,7 @@ function setupNavigation() {
     });
   }
 
-  // Smooth scrolling for navigation links
+  // Smooth scrolling for navigation links  
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', function(e) {
       e.preventDefault();
@@ -187,7 +505,7 @@ function scrollToSection(sectionId) {
   }
 }
 
-// News Ticker
+// News Ticker  
 function setupNewsTicker() {
   const ticker = document.getElementById('newsTicker');
   if (ticker) {
@@ -195,7 +513,7 @@ function setupNewsTicker() {
   }
 }
 
-// Crime Cards
+// Crime Cards  
 function setupCrimeCards() {
   const container = document.getElementById('crimeCards');
   if (!container) return;
@@ -224,7 +542,7 @@ function setupCrimeCards() {
   });
 }
 
-// Tabs functionality
+// Tabs functionality  
 function setupTabs() {
   const tabButtons = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
@@ -233,11 +551,11 @@ function setupTabs() {
     button.addEventListener('click', function() {
       const targetTab = this.getAttribute('data-tab');
       
-      // Remove active class from all buttons and contents
+      // Remove active class from all buttons and contents  
       tabButtons.forEach(btn => btn.classList.remove('active'));
       tabContents.forEach(content => content.classList.remove('active'));
       
-      // Add active class to clicked button and corresponding content
+      // Add active class to clicked button and corresponding content  
       this.classList.add('active');
       const targetContent = document.getElementById(targetTab);
       if (targetContent) {
@@ -246,7 +564,7 @@ function setupTabs() {
     });
   });
   
-  // Setup laws grid
+  // Setup laws grid  
   setupLawsGrid();
 }
 
@@ -269,7 +587,7 @@ function setupLawsGrid() {
   });
 }
 
-// Laws Table
+// Laws Table  
 function setupLawsTable() {
   const tbody = document.getElementById('lawsTableBody');
   if (!tbody) return;
@@ -286,7 +604,7 @@ function setupLawsTable() {
   });
 }
 
-// Search functionality
+// Search functionality  
 function setupSearchFunctionality() {
   const searchInput = document.getElementById('lawSearch');
   if (!searchInput) return;
@@ -306,7 +624,7 @@ function setupSearchFunctionality() {
   });
 }
 
-// Password Strength Checker
+// Password Strength Checker  
 function setupPasswordChecker() {
   const passwordInput = document.getElementById('passwordInput');
   const strengthDiv = document.getElementById('passwordStrength');
@@ -321,7 +639,7 @@ function setupPasswordChecker() {
     strengthDiv.className = `password-strength ${result.level}`;
     strengthDiv.textContent = result.message;
     tipsDiv.innerHTML = result.tips.length > 0 ? 
-      `<strong>Suggestions:</strong><br>${result.tips.join('<br>')}` : '';
+      `**Suggestions:**<br>${result.tips.join('<br>')}` : '';
   });
 }
 
@@ -351,7 +669,7 @@ function checkPasswordStrength(password) {
   if (/[^a-zA-Z0-9]/.test(password)) score++;
   else tips.push('• Include special characters (!@#$%^&*)');
   
-  if (!/(.)\1{2,}/.test(password)) score++;
+  if (!/(.)\\1{2,}/.test(password)) score++;
   else tips.push('• Avoid repeating characters');
   
   let level, message;
@@ -369,7 +687,7 @@ function checkPasswordStrength(password) {
   return { level, message, tips };
 }
 
-// 2FA Setup Guide
+// 2FA Setup Guide  
 function setup2FAGuide() {
   const platformBtns = document.querySelectorAll('.platform-btn');
   const instructionsDiv = document.getElementById('platformInstructions');
@@ -380,13 +698,13 @@ function setup2FAGuide() {
     btn.addEventListener('click', function() {
       const platform = this.getAttribute('data-platform');
       
-      // Remove active class from all buttons
+      // Remove active class from all buttons  
       platformBtns.forEach(b => b.classList.remove('active'));
       
-      // Add active class to clicked button
+      // Add active class to clicked button  
       this.classList.add('active');
       
-      // Show instructions
+      // Show instructions  
       if (platformInstructions[platform]) {
         instructionsDiv.innerHTML = platformInstructions[platform];
       }
@@ -394,7 +712,7 @@ function setup2FAGuide() {
   });
 }
 
-// Reporting Checklist
+// Reporting Checklist  
 function setupReportingChecklist() {
   const container = document.getElementById('reportingChecklist');
   if (!container) return;
@@ -404,43 +722,19 @@ function setupReportingChecklist() {
     label.className = 'checklist-item';
     label.innerHTML = `
       <input type="checkbox" class="checklist-checkbox">
-      <span class="checkmark"></span>
-      <span>${item}</span>
+      ${item}
     `;
     container.appendChild(label);
   });
 }
 
-// Learning Modules
+// Learning Modules - Updated to work with new progress system
 function setupLearningModules() {
-  const moduleButtons = document.querySelectorAll('.module-btn');
-  
-  moduleButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-      const level = this.getAttribute('data-level');
-      const progressBar = this.parentElement.querySelector('.progress-fill');
-      
-      // Simulate progress
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += 10;
-        progressBar.style.width = progress + '%';
-        
-        if (progress >= 100) {
-          clearInterval(interval);
-          this.textContent = 'Completed';
-          this.classList.add('btn--secondary');
-          this.classList.remove('btn--primary');
-        }
-      }, 200);
-      
-      this.textContent = 'Loading...';
-      this.disabled = true;
-    });
-  });
+  // Module buttons are now handled by startModule function
+  // This function can be used for additional setup if needed
 }
 
-// Threat List
+// Threat List  
 function setupThreatList() {
   const container = document.getElementById('threatList');
   if (!container) return;
@@ -453,9 +747,9 @@ function setupThreatList() {
   });
 }
 
-// Quiz Functions
+// Quiz Functions  
 function setupQuiz() {
-  // Initialize quiz with extended questions
+  // Initialize quiz with extended questions  
   const extendedQuestions = [
     ...appData.quizQuestions,
     {
@@ -559,7 +853,7 @@ function displayQuestion() {
     });
   }
   
-  // Update navigation buttons
+  // Update navigation buttons  
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
   
@@ -573,14 +867,14 @@ function displayQuestion() {
 }
 
 function selectOption(index, element) {
-  // Remove previous selections
+  // Remove previous selections  
   document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
   
-  // Mark current selection
+  // Mark current selection  
   element.classList.add('selected');
   userAnswers[currentQuizQuestion] = index;
   
-  // Enable next button
+  // Enable next button  
   const nextBtn = document.getElementById('nextBtn');
   if (nextBtn) {
     nextBtn.disabled = false;
@@ -604,7 +898,7 @@ function previousQuestion() {
 }
 
 function finishQuiz() {
-  // Calculate score
+  // Calculate score  
   quizScore = 0;
   userAnswers.forEach((answer, index) => {
     if (answer === appData.quizQuestions[index].correct) {
@@ -612,7 +906,7 @@ function finishQuiz() {
     }
   });
   
-  // Show results
+  // Show results  
   const quizContainer = document.getElementById('quizContainer');
   const quizResult = document.getElementById('quizResult');
   
@@ -625,7 +919,7 @@ function finishQuiz() {
     finalScoreEl.textContent = `${quizScore}/${appData.quizQuestions.length} (${percentage}%)`;
   }
   
-  // Show recommendations
+  // Show recommendations  
   const recommendations = getRecommendations(percentage);
   const recommendationsEl = document.getElementById('recommendations');
   if (recommendationsEl) {
@@ -673,7 +967,7 @@ function restartQuiz() {
   displayQuestion();
 }
 
-// Utility Functions
+// Utility Functions  
 function validateEmail(email) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(email);
@@ -687,14 +981,14 @@ function formatDate(date) {
   }).format(date);
 }
 
-// Keyboard navigation
+// Keyboard navigation  
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeQuiz();
   }
 });
 
-// Intersection Observer for animations
+// Intersection Observer for animations  
 const observerOptions = {
   threshold: 0.1,
   rootMargin: '0px 0px -50px 0px'
@@ -708,14 +1002,14 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-// Observe all sections for animations
+// Observe all sections for animations  
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.section').forEach(section => {
     observer.observe(section);
   });
 });
 
-// Form validation helpers
+// Form validation helpers  
 function validateForm(form) {
   const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
   let isValid = true;
@@ -732,7 +1026,7 @@ function validateForm(form) {
   return isValid;
 }
 
-// Initialize tooltips
+// Initialize tooltips  
 function initializeTooltips() {
   document.querySelectorAll('[data-tooltip]').forEach(element => {
     element.addEventListener('mouseenter', showTooltip);
@@ -758,23 +1052,63 @@ function hideTooltip() {
   }
 }
 
-// Error handling
+// Error handling  
 window.addEventListener('error', function(e) {
   console.error('Application error:', e.error);
 });
 
-// Performance monitoring
+// Performance monitoring  
 window.addEventListener('load', function() {
   const loadTime = performance.now();
   console.log(`Page loaded in ${loadTime.toFixed(2)}ms`);
 });
 
-// Export functions for testing (if needed)
+// Add CSS for completion notification animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .completion-notification .notification-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .completion-notification button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+document.head.appendChild(style);
+
+// Export functions for testing (if needed)  
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     checkPasswordStrength,
     validateEmail,
     formatDate,
-    validateForm
+    validateForm,
+    saveProgressToStorage,
+    loadProgressFromStorage,
+    resetProgress
   };
 }

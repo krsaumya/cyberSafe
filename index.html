@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,33 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
+    
+
+
+    
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ 
+            pageLanguage: 'en',  // Set to 'hi' or your site's primary language if preferred
+            includedLanguages: 'en,hi,ta,te,kn,ml,bn,mr,gu,pa'  // Added common Indian languages: Hindi (hi), Tamil (ta), Telugu (te), Kannada (kn), Malayalam (ml), Bengali (bn), Marathi (mr), Gujarati (gu), Punjabi (pa)
+        }, 'google_translate_element');
+    }
+</script>
+
+<!-- Load the Google Translate script -->
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <!-- Navigation -->
     <nav class="navbar">
+         
         <div class="container">
             <div class="nav-brand">
                 <h2>🛡️ CyberSafe Hub</h2>
             </div>
             <ul class="nav-menu" id="navMenu">
+                
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#learning" class="nav-link">Learning Hub</a></li>
                 <li><a href="#threats" class="nav-link">Threats</a></li>
@@ -23,7 +43,10 @@
                 <li><a href="#news" class="nav-link">News</a></li>
                 <li><a href="#report" class="nav-link">Report</a></li>
             </ul>
+            <div id="google_translate_element"></div>
+            
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle mobile menu">☰</button>
+            
         </div>
     </nav>
 
@@ -32,9 +55,11 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Stay Safe. Stay Secure. Learn Cybersecurity the Smart Way.</h1>
-                <p>Comprehensive cybersecurity education for everyone. Learn, protect, and stay informed about digital security threats and solutions.</p>
+                <p>Comprehensive cybersecurity education for everyone. Learn, protect, and stay informed about digital
+                    security threats and solutions.</p>
                 <div class="hero-buttons">
-                    <button class="btn btn--primary btn--lg" onclick="scrollToSection('learning')">Start Learning</button>
+                    <button class="btn btn--primary btn--lg" onclick="scrollToSection('learning')">Start
+                        Learning</button>
                     <button class="btn btn--outline btn--lg" onclick="scrollToSection('tools')">Security Tools</button>
                 </div>
                 <div class="news-ticker">
@@ -42,10 +67,12 @@
                         ⚠️ Breaking: New cybersecurity threats detected...
                     </div>
                 </div>
+                
                 <button class="btn btn--secondary quiz-btn" onclick="openQuiz()">
                     🧠 Test Your Knowledge - Take Quiz
                 </button>
             </div>
+            
         </div>
     </section>
 
@@ -53,8 +80,9 @@
     <section id="learning" class="section">
         <div class="container">
             <h2>Learning Hub</h2>
-            <p>Interactive modules with progress tracking and video tutorials to enhance your cybersecurity knowledge</p>
-            
+            <p>Interactive modules with progress tracking and video tutorials to enhance your cybersecurity knowledge
+            </p>
+
             <div class="learning-grid">
                 <!-- Beginner Basics Module -->
                 <div class="card learning-module">
@@ -64,23 +92,24 @@
                         <div class="progress-bar">
                             <div class="progress-fill" id="progress-beginner" style="width: 0%"></div>
                         </div>
-                        <button class="btn btn--primary module-btn" data-level="beginner" onclick="startModule('beginner')">
+                        <button class="btn btn--primary module-btn" data-level="beginner"
+                            onclick="startModule('beginner')">
                             Start Module
                         </button>
-                        
+
                         <!-- Video Section -->
                         <div class="video-section" id="video-beginner" style="display: none;">
                             <h4>📹 Video Tutorials</h4>
                             <div class="video-container">
-                                <iframe src="https://www.youtube.com/embed/inWWhr5tnEA" 
-                                        title="Cybersecurity Basics for Beginners" 
-                                        frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen>
+                                <iframe src="https://www.youtube.com/embed/inWWhr5tnEA"
+                                    title="Cybersecurity Basics for Beginners" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
                                 </iframe>
                             </div>
                             <div class="video-links">
-                                <a href="https://www.youtube.com/watch?v=inWWhr5tnEA" target="_blank" class="btn btn--outline btn--sm">
+                                <a href="https://www.youtube.com/watch?v=inWWhr5tnEA" target="_blank"
+                                    class="btn btn--outline btn--sm">
                                     🔗 Watch on YouTube
                                 </a>
                             </div>
@@ -96,23 +125,24 @@
                         <div class="progress-bar">
                             <div class="progress-fill" id="progress-intermediate" style="width: 0%"></div>
                         </div>
-                        <button class="btn btn--primary module-btn" data-level="intermediate" onclick="startModule('intermediate')">
+                        <button class="btn btn--primary module-btn" data-level="intermediate"
+                            onclick="startModule('intermediate')">
                             Start Module
                         </button>
-                        
+
                         <!-- Video Section -->
                         <div class="video-section" id="video-intermediate" style="display: none;">
                             <h4>📹 Video Tutorials</h4>
                             <div class="video-container">
-                                <iframe src="https://www.youtube.com/embed/Dk-ZqQ-bfy4" 
-                                        title="How to Detect Cyber Threats" 
-                                        frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen>
+                                <iframe src="https://www.youtube.com/embed/Dk-ZqQ-bfy4"
+                                    title="How to Detect Cyber Threats" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
                                 </iframe>
                             </div>
                             <div class="video-links">
-                                <a href="https://www.youtube.com/watch?v=Dk-ZqQ-bfy4" target="_blank" class="btn btn--outline btn--sm">
+                                <a href="https://www.youtube.com/watch?v=Dk-ZqQ-bfy4" target="_blank"
+                                    class="btn btn--outline btn--sm">
                                     🔗 Watch on YouTube
                                 </a>
                             </div>
@@ -128,23 +158,24 @@
                         <div class="progress-bar">
                             <div class="progress-fill" id="progress-advanced" style="width: 0%"></div>
                         </div>
-                        <button class="btn btn--primary module-btn" data-level="advanced" onclick="startModule('advanced')">
+                        <button class="btn btn--primary module-btn" data-level="advanced"
+                            onclick="startModule('advanced')">
                             Start Module
                         </button>
-                        
+
                         <!-- Video Section -->
                         <div class="video-section" id="video-advanced" style="display: none;">
                             <h4>📹 Video Tutorials</h4>
                             <div class="video-container">
-                                <iframe src="https://www.youtube.com/embed/s19BxFpoSd0" 
-                                        title="Advanced Cybersecurity Techniques" 
-                                        frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen>
+                                <iframe src="https://www.youtube.com/embed/s19BxFpoSd0"
+                                    title="Advanced Cybersecurity Techniques" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
                                 </iframe>
                             </div>
                             <div class="video-links">
-                                <a href="https://www.youtube.com/watch?v=s19BxFpoSd0" target="_blank" class="btn btn--outline btn--sm">
+                                <a href="https://www.youtube.com/watch?v=s19BxFpoSd0" target="_blank"
+                                    class="btn btn--outline btn--sm">
                                     🔗 Watch on YouTube
                                 </a>
                             </div>
@@ -193,7 +224,7 @@
         <div class="container">
             <h2>Cyber Crime Awareness</h2>
             <p>Learn about common cyber threats and how to protect yourself</p>
-            
+
             <div class="crime-cards" id="crimeCards">
                 <!-- Crime cards will be populated by JavaScript -->
             </div>
@@ -208,11 +239,12 @@
                     <button class="tab-btn active" data-tab="laws-overview">IT Act 2000 & IPC Basics</button>
                     <button class="tab-btn" data-tab="laws-table">Laws Reference Table</button>
                 </div>
-                
+
                 <div class="tab-content active" id="laws-overview">
                     <h3>India-Specific Cybersecurity Laws</h3>
-                    <p>The Information Technology Act 2000 is India's primary law dealing with cybercrime and e-commerce. It defines cyber offenses and prescribes penalties for cybercrimes.</p>
-                    
+                    <p>The Information Technology Act 2000 is India's primary law dealing with cybercrime and
+                        e-commerce. It defines cyber offenses and prescribes penalties for cybercrimes.</p>
+
                     <div class="law-categories">
                         <div class="law-category">
                             <h4>Minor Offenses</h4>
@@ -223,11 +255,11 @@
                             <p>May involve longer imprisonment terms and substantial penalties</p>
                         </div>
                     </div>
-                    
+
                     <div class="laws-grid" id="lawsGrid">
                         <!-- Laws will be populated by JavaScript -->
                     </div>
-                    
+
                     <h3>How to Report Cybercrime in India</h3>
                     <div class="steps-container">
                         <div class="step">
@@ -253,10 +285,11 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="tab-content" id="laws-table">
                     <div class="search-container">
-                        <input type="text" id="lawSearch" class="form-control" placeholder="Search laws by crime type, section, or description...">
+                        <input type="text" id="lawSearch" class="form-control"
+                            placeholder="Search laws by crime type, section, or description...">
                     </div>
                     <div class="table-container">
                         <table class="laws-table">
@@ -283,14 +316,15 @@
         <div class="container">
             <h2>DIY Tools & Tips</h2>
             <p>Practical tools and resources to enhance your cybersecurity</p>
-            
-            <div class="tools-grid">          
+
+            <div class="tools-grid">
                 <!-- Password Strength Checker -->
                 <div class="card tool-card">
                     <div class="card__body">
                         <h3>Password Strength Checker</h3>
                         <div class="form-group">
-                            <input type="password" id="passwordInput" class="form-control" placeholder="Enter your password to check strength">
+                            <input type="password" id="passwordInput" class="form-control"
+                                placeholder="Enter your password to check strength">
                         </div>
                         <div id="passwordStrength" class="password-strength"></div>
                         <div id="passwordTips" class="password-tips"></div>
@@ -348,7 +382,7 @@
     <section id="news" class="section">
         <div class="container">
             <h2>Latest Security News & Alerts</h2>
-            
+
             <div class="news-grid">
                 <div class="card">
                     <div class="card__body">
@@ -357,7 +391,7 @@
                         <a href="https://www.cert-in.org.in/" target="_blank" class="btn btn--primary">Visit CERT-In</a>
                     </div>
                 </div>
-                
+
                 <div class="card">
                     <div class="card__body">
                         <h3>Trending Threats</h3>
@@ -375,12 +409,13 @@
     <section id="report" class="section report-section">
         <div class="container">
             <h2>Report a Crime</h2>
-            
+
             <div class="report-cta">
                 <h3>Think you're a victim? Act now.</h3>
                 <p>Report cybercrime immediately to minimize damage and help authorities</p>
                 <div class="report-buttons">
-                    <a href="https://cybercrime.gov.in/" target="_blank" class="btn btn--primary btn--lg">Report Online</a>
+                    <a href="https://cybercrime.gov.in/" target="_blank" class="btn btn--primary btn--lg">Report
+                        Online</a>
                     <a href="tel:1930" class="btn btn--secondary btn--lg">Call 1930</a>
                 </div>
             </div>
@@ -457,11 +492,12 @@
                         <!-- Options will be populated by JavaScript -->
                     </div>
                     <div class="quiz-navigation">
-                        <button id="prevBtn" class="btn btn--outline" onclick="previousQuestion()" style="display: none;">Previous</button>
+                        <button id="prevBtn" class="btn btn--outline" onclick="previousQuestion()"
+                            style="display: none;">Previous</button>
                         <button id="nextBtn" class="btn btn--primary" onclick="nextQuestion()" disabled>Next</button>
                     </div>
                 </div>
-                
+
                 <div id="quizResult" class="quiz-result hidden">
                     <h3>Quiz Complete!</h3>
                     <div class="score">
@@ -480,5 +516,7 @@
     </div>
 
     <script src="app.js"></script>
+        
 </body>
+
 </html>

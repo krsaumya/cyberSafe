@@ -1,0 +1,239 @@
+/* ============================================================
+   css/responsive.css — Media queries and accessibility
+   ============================================================ */
+
+/* ── Tablet / Mobile (≤768px) ───────────────────────────── */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--color-surface);
+        flex-direction: column;
+        padding: var(--space-16);
+        border-top: 1px solid var(--color-border);
+        box-shadow: var(--shadow-md);
+        gap: var(--space-16);
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .mobile-toggle {
+        display: block;
+    }
+
+    .hero-content h1 {
+        font-size: var(--font-size-3xl);
+    }
+
+    .hero-buttons,
+    .report-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tab-buttons {
+        flex-direction: column;
+    }
+
+    .steps-container {
+        gap: var(--space-16);
+    }
+
+    .step {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .platforms {
+        justify-content: center;
+    }
+
+    .quiz-navigation {
+        flex-direction: column;
+    }
+
+    .laws-table {
+        font-size: var(--font-size-sm);
+    }
+
+    .laws-table th,
+    .laws-table td {
+        padding: var(--space-8);
+    }
+
+    .video-container {
+        padding-bottom: 75%;
+    }
+
+    .progress-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── Small mobile (≤480px) ──────────────────────────────── */
+@media (max-width: 480px) {
+    .hero {
+        min-height: 60vh;
+        padding: var(--space-24) 0;
+    }
+
+    .hero-content h1 {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--space-16);
+    }
+
+    .hero-content p {
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--space-24);
+    }
+
+    .hero-buttons {
+        gap: var(--space-12);
+    }
+
+    .section {
+        padding: var(--space-24) 0;
+    }
+
+    .learning-grid,
+    .crime-cards,
+    .tools-grid,
+    .news-grid,
+    .laws-grid,
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: var(--space-20);
+    }
+
+    .video-section {
+        margin-top: var(--space-16);
+        padding-top: var(--space-16);
+    }
+
+    .navbar {
+        padding: var(--space-12) 0;
+    }
+
+    .nav-brand h2 {
+        font-size: var(--font-size-xl);
+    }
+
+    .container {
+        padding-right: var(--space-12);
+        padding-left: var(--space-12);
+    }
+
+    .card__body,
+    .card__header,
+    .card__footer {
+        padding: var(--space-12);
+    }
+
+    .modal-header,
+    .modal-body {
+        padding: var(--space-16);
+    }
+
+    .tab-content {
+        padding: var(--space-16);
+    }
+
+    .reporting-checklist {
+        padding: var(--space-16);
+    }
+
+    .laws-table th,
+    .laws-table td {
+        padding: var(--space-6) var(--space-8);
+        font-size: var(--font-size-sm);
+    }
+
+    .step-number {
+        width: 32px;
+        height: 32px;
+        font-size: var(--font-size-sm);
+    }
+
+    .step {
+        align-items: center;
+        text-align: left;
+    }
+
+    .progress-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-8);
+    }
+
+    .progress-item span:first-child,
+    .progress-item span:last-child {
+        min-width: auto;
+        text-align: left;
+    }
+
+    .video-links {
+        flex-direction: column;
+        gap: var(--space-8);
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-16);
+    }
+
+    .tool-card {
+        min-height: auto;
+    }
+
+    .law-categories {
+        grid-template-columns: 1fr;
+        gap: var(--space-16);
+    }
+}
+
+/* ── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .ticker-content {
+        animation: none;
+    }
+
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* ── High contrast ──────────────────────────────────────── */
+@media (prefers-contrast: high) {
+    .card {
+        border-width: 2px;
+    }
+
+    .btn {
+        border-width: 2px;
+    }
+}
+
+/* ── Print ──────────────────────────────────────────────── */
+@media print {
+
+    .navbar,
+    .hero-buttons,
+    .quiz-btn,
+    .modal {
+        display: none;
+    }
+
+    .section {
+        page-break-inside: avoid;
+    }
+}
